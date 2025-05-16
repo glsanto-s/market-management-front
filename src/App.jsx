@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GlobalContext } from './UserContext';
 import "./App.css";
-import CadastroVendedor from "./pages/cadastro";
+import CadastroVendedor from "./pages/Cadastro/Cadastro";
 
 function App() {
   return (
