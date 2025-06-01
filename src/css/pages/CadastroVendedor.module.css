@@ -1,0 +1,59 @@
+.form {
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.containerCadastro {
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+}
+
+.side_1 {
+  flex: 1;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px 0 0 10px;
+}
+
+.imgCadastro {
+  max-width: 80%;
+  height: auto;
+  opacity: 0.6;
+}
+
+.side_1 h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.side_2 {
+  flex: 1;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  border-radius: 0 10px 10px 0;
+}
+
+/* body {
+  background-color: #b5303b;
+} */
+
+.error {
+  display: grid;
+  gap: 0.5px;
+  color: red;
+  font-size: 12px;
+}

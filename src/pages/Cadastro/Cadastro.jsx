@@ -1,21 +1,21 @@
-import React from "react";
-import Input from "../../components/input";
-import Button from "../../components/button";
-import "../../css/pages/cadastroVendedor.css";
-import { useNavigate } from "react-router-dom";
-import Imagem from "../../assets/cadastro.png";
-import validateVendedor from "./validateForm.js";
+import React from 'react';
+import Input from '../../components/input';
+import Button from '../../components/button';
+import styles from '../../css/pages/CadastroVendedor.module.css';
+import { Link, useNavigate } from 'react-router-dom';
+import Imagem from '../../assets/cadastro.png';
+import validateVendedor from './validateForm.js';
 
 const CadastroVendedor = () => {
   const [form, setForm] = React.useState({
-    nome: "",
-    email: "",
-    celular: "",
-    senha: "",
-    cnpj: "",
+    nome: '',
+    email: '',
+    celular: '',
+    senha: '',
+    cnpj: '',
   });
   const [errors, setErrors] = React.useState({});
-  const [sucess, setSucess] = React.useState("");
+  const [sucess, setSucess] = React.useState('');
 
   const navigate = useNavigate();
 
@@ -25,58 +25,58 @@ const CadastroVendedor = () => {
   };
 
   const login = () => {
-    navigate("/login");
+    navigate('/');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const validationErrors = validateVendedor(form);
     setErrors(validationErrors);
-  
+
     if (Object.keys(validationErrors).length > 0) return;
-  
+
     try {
-      const response = await fetch("http://localhost:8080/api/sellers", {
-        method: "POST",
+      const response = await fetch('http://localhost:8080/api/sellers', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(form),
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
-        console.error("Erro na resposta:", data.message);
+        console.error('Erro na resposta:', data.message);
         return;
       }
-  
-      console.log("Cliente cadastrado com sucesso:", data);
-  
+
+      console.log('Cliente cadastrado com sucesso:', data);
+
       setErrors({});
-      setSucess("Cliente cadastrado com sucesso!");
+      setSucess('Cliente cadastrado com sucesso!');
       setTimeout(() => {
-        navigate("/");
+        navigate('/');
       }, 2000);
     } catch (error) {
-      console.error("Erro na requisição:", error);
+      console.error('Erro na requisição:', error);
     }
   };
 
   return (
     <>
-      <div className="container-cadastro">
+      <div className={styles.containerCadastro}>
         <div
-          className="side_1"
+          className={styles.side_1}
           style={{
             backgroundImage: `url(${Imagem})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
           }}
         ></div>
-        <div className="side_2">
-          <form onSubmit={handleSubmit}>
+        <div className={styles.side_2}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <Input
               id="nome"
               label="Nome"
@@ -84,7 +84,7 @@ const CadastroVendedor = () => {
               type="nome"
               onChange={handleChange}
             />
-            {errors.nome && <p className="error">{errors.nome}</p>}
+            {errors.nome && <p className={styles.error}>{errors.nome}</p>}
             <Input
               id="email"
               label="Email"
@@ -92,7 +92,7 @@ const CadastroVendedor = () => {
               type="email"
               onChange={handleChange}
             />
-            {errors.email && <p className="error">{errors.email}</p>}
+            {errors.email && <p className={styles.error}>{errors.email}</p>}
             <Input
               id="celular"
               label="Celular"
@@ -100,7 +100,7 @@ const CadastroVendedor = () => {
               type="tel"
               onChange={handleChange}
             />
-            {errors.celular && <p className="error">{errors.celular}</p>}
+            {errors.celular && <p className={styles.error}>{errors.celular}</p>}
             <Input
               id="cnpj"
               label="Cnpj"
@@ -108,7 +108,7 @@ const CadastroVendedor = () => {
               type="num"
               onChange={handleChange}
             />
-            {errors.cnpj && <p className="error">{errors.cnpj}</p>}
+            {errors.cnpj && <p className={styles.error}>{errors.cnpj}</p>}
             <Input
               id="senha"
               label="Senha"
@@ -116,14 +116,14 @@ const CadastroVendedor = () => {
               type="password"
               onChange={handleChange}
             />
-            {errors.senha && <p className="error">{errors.senha}</p>}
+            {errors.senha && <p className={styles.error}>{errors.senha}</p>}
 
             <Button texto="Cadastrar" />
             <p>
-              Já possui uma conta?{" "}
+              Já possui uma conta?{' '}
               <a
                 onClick={login}
-                style={{ cursor: "pointer", color: "#b51f21" }}
+                style={{ cursor: 'pointer', color: '#b51f21' }}
               >
                 Logar
               </a>
