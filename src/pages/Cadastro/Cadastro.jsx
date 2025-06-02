@@ -37,7 +37,7 @@ const CadastroVendedor = () => {
     if (Object.keys(validationErrors).length > 0) return;
   
     try {
-      const response = await fetch("http://localhost:8080/api/sellers", {
+      const response = await fetch("http://127.0.0.1:8888/api/sellers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,8 +46,11 @@ const CadastroVendedor = () => {
       });
   
       const data = await response.json();
-  
-      if (!response.ok) {
+      
+      console.log(data)
+
+      if (data.status_code != 200) {
+        window.alert(`Erro: ${data.message}`);
         console.error("Erro na resposta:", data.message);
         return;
       }
@@ -81,7 +84,7 @@ const CadastroVendedor = () => {
               id="nome"
               label="Nome"
               required
-              type="nome"
+              type="text"
               onChange={handleChange}
             />
             {errors.nome && <p className="error">{errors.nome}</p>}
