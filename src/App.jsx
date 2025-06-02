@@ -1,7 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { GlobalContext } from './UserContext';
-import "./App.css";
-import CadastroVendedor from "./pages/Cadastro/Cadastro";
+import './App.css';
+import CadastroVendedor from './pages/Cadastro/Cadastro';
+import Login from './pages/Login/Login';
+import CadastroProduto from './pages/CadastroProduto/CadastroProduto';
 import DetalhesProduto from "./pages/Produto/detalhes";
 
 function App() {
@@ -9,7 +11,9 @@ function App() {
     <BrowserRouter>
       <GlobalContext>
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/cadastrar" element={<CadastroVendedor />} />
+          <Route path="/cadastrar-produto" element={<CadastroProduto />} />
           <Route path="/produto/:produto_id" element={<DetalhesProduto />} />
         </Routes>
       </GlobalContext>
