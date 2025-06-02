@@ -4,6 +4,8 @@ import './App.css';
 import CadastroVendedor from './pages/Cadastro/Cadastro';
 import Login from './pages/Login/Login';
 import CadastroProduto from './pages/CadastroProduto/CadastroProduto';
+import DetalhesProduto from "./pages/Produto/detalhes";
+import EditarProduto from "./pages/Produto/editarProduto";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/cadastrar" element={<CadastroVendedor />} />
           <Route path="/cadastrar-produto" element={<CadastroProduto />} />
+          <Route path="/produto/:produto_id" element={<DetalhesProduto />} />
+          <Route path="/produto/editar/:produto_id" element={<EditarProduto />} />
         </Routes>
       </GlobalContext>
     </BrowserRouter>
