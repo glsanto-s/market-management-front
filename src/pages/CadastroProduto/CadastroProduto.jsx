@@ -35,7 +35,7 @@ const CadastroProduto = () => {
       formData.append('imagem', forms.imagem);
       formData.append('id_vendedor', forms.id_vendedor);
 
-      const response = await fetch('http://192.168.0.100:8888/api/produtos', {
+      const response = await fetch('http://127.0.0.1:8888//api/produtos', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -68,7 +68,7 @@ const CadastroProduto = () => {
           <Input
             id="nome"
             label="Nome"
-            type="nome"
+            type="text"
             onChange={handleChange}
             value={forms.nome}
             required
@@ -100,10 +100,8 @@ const CadastroProduto = () => {
               onChange={(e) => setForms({ ...forms, status: e.target.value })}
               value={forms.status}
             >
-              <option value="Inativo" selected>
-                Ativo
-              </option>
-              <option value="Ativo">Inativo</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Inativo">Inativo</option>
             </select>
           </div>
 

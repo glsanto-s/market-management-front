@@ -20,6 +20,7 @@ const Header = () => {
         <NavLink to="/meus-produtos" end>
           Meus Produtos
         </NavLink>
+        <NavLink to="/cadastrar-produto">Cadastrar produto</NavLink>
         <div className={styles.user}>
           {user.nome}
           <nav className={styles.nav}>

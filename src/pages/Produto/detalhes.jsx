@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import "../../css/pages/detalhesProduto.css";
-import Button from "../../components/button";
-import Header from "../../layout/Header";
-import { UserContext } from "../../UserContext";
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import '../../css/pages/detalhesProduto.css';
+import Button from '../../components/button';
+import Header from '../../layout/Header';
+import { UserContext } from '../../UserContext';
 
 const DetalhesProduto = () => {
   const [dados, setDados] = useState(null);
@@ -16,11 +16,11 @@ const DetalhesProduto = () => {
         const response = await fetch(
           `http://127.0.0.1:8888/api/produtos/${produto_id}`,
           {
-            method: "GET",
+            method: 'GET',
             headers: {
               Authorization: `Bearer ${user.token}`,
             },
-          }
+          },
         );
 
         const data = await response.json();
@@ -32,7 +32,7 @@ const DetalhesProduto = () => {
           setDados(data);
         }
       } catch (error) {
-        console.error("Erro ao buscar produto:", error);
+        console.error('Erro ao buscar produto:', error);
       }
     }
 
@@ -43,18 +43,18 @@ const DetalhesProduto = () => {
     return (
       <>
         <Header />
-        <p style={{ padding: "2rem" }}>Produto não encontrado!</p>
+        <p style={{ padding: '2rem' }}>Produto não encontrado!</p>
       </>
     );
   }
 
-  const partes = dados.imagem.replace(/\\/g, "/").split("/");
+  const partes = dados.imagem.replace(/\\/g, '/').split('/');
   const nomeArquivo = partes[partes.length - 1];
 
   return (
     <>
       <Header />
-      <div className="product-container" style={{ marginTop: "24px" }}>
+      <div className="product-container" style={{ marginTop: '24px' }}>
         <div className="product-content">
           <div className="product-image-area">
             <img
@@ -70,13 +70,13 @@ const DetalhesProduto = () => {
             </p>
             <p className="product-description">Status: {dados.status}</p>
             <p className="product-price">
-              R$ {dados.preco ? dados.preco.toFixed(2) : "0.00"}
+              R$ {dados.preco ? dados.preco.toFixed(2) : '0.00'}
             </p>
             <Link to={`/produto/editar/${dados.id}`}>
               <Button texto="Editar" />
             </Link>
 
-            <Link to="/" className="back-link">
+            <Link to="/meus-produtos" className="back-link">
               ← Voltar
             </Link>
           </div>
