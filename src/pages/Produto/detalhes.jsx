@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import '../../css/pages/detalhesProduto.css';
 import Button from '../../components/button';
 import Header from '../../layout/Header';
 import { UserContext } from '../../UserContext';
+import styles from "../../css/components/button.module.css";
 
 const DetalhesProduto = () => {
   const [dados, setDados] = useState(null);
   const { produto_id } = useParams();
   const { user } = React.useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProduto() {
@@ -38,6 +40,26 @@ const DetalhesProduto = () => {
 
     fetchProduto();
   }, [produto_id]);
+
+  const handleDelete = async () => {
+  try {
+    const response = await fetch(`http://127.0.0.1:8888/api/produtos/${produto_id}`, {
+      method: 'DELETE',
+      headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+    });
+
+    if (response.ok) {
+      window.alert("Item excluído com sucesso");
+      navigate('/meus-produtos');
+    } else {
+      console.error("Erro ao excluir:", response.status);
+    }
+  } catch (error) {
+    console.error("Erro ao excluir:", error);
+  }
+  };
 
   if (!dados) {
     return (
@@ -72,9 +94,17 @@ const DetalhesProduto = () => {
             <p className="product-price">
               R$ {dados.preco ? dados.preco.toFixed(2) : '0.00'}
             </p>
+
+            <div style={{ display: 'flex' }}>
+
             <Link to={`/produto/editar/${dados.id}`}>
               <Button texto="Editar" />
             </Link>
+
+            <button style={{ backgroundColor: '#b5303b', marginLeft:'15px'}} className={styles.button}  onClick={handleDelete}>
+                   Excluir
+                  </button>
+            </div>
 
             <Link to="/meus-produtos" className="back-link">
               ← Voltar
