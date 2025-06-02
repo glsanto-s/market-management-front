@@ -1,41 +1,38 @@
 import React from 'react';
+import styles from '../css/layout/Header.module.css';
+import { UserContext } from '../UserContext';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const { user, setUser } = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  const loggout = () => {
+    localStorage.removeItem('user');
+    setUser({ isLogin: false, nome: '', id: '0', token: '' });
+    navigate('/');
+  };
+
   return (
-    <header style={styles.header}>
-      <div style={styles.logo}>Ms Market Management</div>
-      <nav style={styles.nav}>
-        <a href="/" style={styles.link}>Home</a>
-        <a href="/produtos" style={styles.link}>Produtos</a>
-        <a href="/contato" style={styles.link}>Contato</a>
-      </nav>
+    <header className={styles.header}>
+      <h1 className={styles.titulo}>Market management</h1>
+      <div className={styles.content}>
+        <NavLink to="/meus-produtos" end>
+          Meus Produtos
+        </NavLink>
+        <div className={styles.user}>
+          {user.nome}
+          <nav className={styles.nav}>
+            <div className={styles.arrow}></div>
+            <ul>
+              <li onClick={loggout}>
+                Sair <span>→</span>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
     </header>
   );
 };
-
-const styles = {
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '16px 32px',
-    backgroundColor: '#69AC54',
-    color: '#fff',
-    fontFamily: '"Poppins", sans-serif',
-  },
-  logo: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-  },
-  nav: {
-    display: 'flex',
-    gap: '20px',
-  },
-  link: {
-    color: '#fff',
-    textDecoration: 'none',
-    fontSize: '16px',
-  },
-};
-
 export default Header;
