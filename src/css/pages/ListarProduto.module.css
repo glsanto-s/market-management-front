@@ -148,3 +148,11 @@
 .sucessModal {
   color: #25720e;
 }
+
+.valorTotal {
+  color: #78292e;
+}
+
+.valorTotal span {
+  color: #000;
+}

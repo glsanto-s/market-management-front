@@ -23,6 +23,7 @@ const ListarProduto = () => {
   const [isModal, setIsModal] = React.useState(false);
   const [error, setError] = React.useState('');
   const [sucess, setSucess] = React.useState('');
+  const [valorTotal, setValorTotal] = React.useState(0);
 
   const handleChange = ({ target }) => {
     const { id, value } = target;
@@ -95,6 +96,13 @@ const ListarProduto = () => {
         return;
       } else {
         setSucess('Venda registrada!');
+        console.log('bora', data);
+        setValorTotal(
+          data['Valor Total'].toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }),
+        );
         setTimeout(() => {
           setIsModal(false);
         }, 2000);
@@ -208,6 +216,11 @@ const ListarProduto = () => {
               )}
               {error ? <p className={styles.errorModal}>{error}</p> : null}
               {sucess ? <p className={styles.sucessModal}>{sucess}</p> : null}
+              {sucess ? (
+                <p className={styles.valorTotal}>
+                  Valor total: <span>{valorTotal}</span>
+                </p>
+              ) : null}
             </form>
           </div>
         </section>
