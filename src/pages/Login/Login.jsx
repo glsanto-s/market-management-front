@@ -39,11 +39,9 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        console.error('Erro na resposta:', data.message);
         setError(data.message);
         return;
       } else {
-        console.log('deu certo', data);
         const loggedUser = {
           isLogin: true,
           nome: data.nome,

@@ -15,7 +15,10 @@ const CadastroVendedor = () => {
     cnpj: '',
   });
   const [errors, setErrors] = React.useState({});
-  const [sucess, setSucess] = React.useState('');
+  const [isModal, setIsModal] = React.useState('');
+  const [formCodigo, setFormCodigo] = React.useState({ codigo: '' });
+  const [errorModal, setErrorModal] = React.useState('');
+  const [sucessModal, setSucessModal] = React.useState('');
 
   const navigate = useNavigate();
 
@@ -29,6 +32,9 @@ const CadastroVendedor = () => {
   };
 
   const handleSubmit = async (e) => {
+    setErrorModal('');
+    setSucessModal('');
+    setIsModal(false);
     e.preventDefault();
 
     const validationErrors = validateVendedor(form);
@@ -37,8 +43,8 @@ const CadastroVendedor = () => {
     if (Object.keys(validationErrors).length > 0) return;
 
     try {
-      const response = await fetch("http://127.0.0.1:8888/api/sellers", {
-        method: "POST",
+      const response = await fetch('http://127.0.0.1:8888/api/sellers', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -46,24 +52,56 @@ const CadastroVendedor = () => {
       });
 
       const data = await response.json();
-      
-      console.log(data)
 
       if (data.status_code != 200) {
         window.alert(`Erro: ${data.message}`);
-        console.error("Erro na resposta:", data.message);
+        console.error('Erro na resposta:', data.message);
         return;
       }
 
-      console.log('Cliente cadastrado com sucesso:', data);
-
       setErrors({});
-      setSucess('Cliente cadastrado com sucesso!');
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
+      setIsModal(true);
     } catch (error) {
       console.error('Erro na requisição:', error);
+    }
+  };
+
+  const handleCode = async (e) => {
+    setErrorModal('');
+    setSucessModal('');
+    e.preventDefault();
+    try {
+      const dadosForms = {
+        codigo: String(formCodigo.codigo),
+        celular: form.celular,
+      };
+
+      const response = await fetch(
+        'http://127.0.0.1:8888/api/sellers/activate',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dadosForms),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorModal(data.message);
+        return;
+      } else {
+        setSucessModal(data.message);
+        setTimeout(() => {
+          setIsModal(false);
+          navigate('/');
+        }, 1000);
+      }
+    } catch (e) {
+      console.log('error', e);
+      setErrorModal('Erro ao fazer requisição');
     }
   };
 
@@ -134,6 +172,35 @@ const CadastroVendedor = () => {
           </form>
         </div>
       </div>
+      {isModal ? (
+        <section className={styles.containerModal}>
+          <div className={styles.contentModal}>
+            <button className={styles.closed} onClick={() => setIsModal(false)}>
+              X
+            </button>
+            <form className={styles.form} onSubmit={handleCode}>
+              <h1>Insira o código que recebeu no celular</h1>
+              <Input
+                id="codigo"
+                label="Código"
+                type="number"
+                onChange={(e) => setFormCodigo({ codigo: e.target.value })}
+                value={formCodigo.codigo}
+                required
+              />
+              <div className={styles.buttonModal}>
+                <Button texto="Enviar" />
+              </div>
+              {errorModal ? (
+                <p className={styles.errorModal}>{errorModal}</p>
+              ) : null}
+              {sucessModal ? (
+                <p className={styles.sucessModal}>{sucessModal}</p>
+              ) : null}
+            </form>
+          </div>
+        </section>
+      ) : null}
     </>
   );
 };

@@ -42,10 +42,8 @@ const ListarProduto = () => {
         const data = await response.json();
 
         if (response.ok) {
-          console.log('deu certo', data);
           setDados(data);
         } else {
-          console.log('deu errado', data);
           setDados(null);
         }
       } catch (e) {
@@ -93,11 +91,9 @@ const ListarProduto = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        console.error('Erro na resposta:', data.message);
         setError(data.message);
         return;
       } else {
-        console.log('deu certo', data);
         setSucess('Venda registrada!');
         setTimeout(() => {
           setIsModal(false);
