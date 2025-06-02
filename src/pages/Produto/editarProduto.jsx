@@ -84,7 +84,6 @@ const EditarProduto = () => {
     }
   };
 
-  console.log(form.imagem);
   const partes = form.imagem.replace(/\\/g, "/").split("/");
   const nomeArquivo = partes[partes.length - 1];
 
